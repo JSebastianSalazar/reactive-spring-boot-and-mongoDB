@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.function.Function;
+
 
 @Component
 public class ClientController implements ClientFactory {
@@ -20,16 +22,14 @@ public class ClientController implements ClientFactory {
     }
 
 
-    public Mono<Void> save(Client client) {
-        return Mono.just(client)
-                .flatMap(clientRepository::save).then();
-
-    }
+    public Function<Client,Mono<Void>> save() {
+         return client ->  Mono.just(client).flatMap(clientRepository::save).then();
+     }
 
 
     public Flux<Client> findAll() {
         return clientRepository.findAll();
-    }
+     }
 
 
 }

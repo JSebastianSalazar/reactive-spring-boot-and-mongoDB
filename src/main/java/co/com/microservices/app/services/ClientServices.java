@@ -20,7 +20,7 @@ public class ClientServices {
     @PostMapping("/save")
     @CrossOrigin(value = "*")
     public Mono<Void> save(@RequestBody Client client) {
-        return clientController.save(client);
+        return clientController.save().apply(client);
     }
 
     @GetMapping("/status")
